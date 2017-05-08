@@ -1,19 +1,25 @@
 pragma solidity ^0.4.4;
 
+
 import "./zeppelin/token/StandardToken.sol";
 
 
-contract CTTToken is StandardToken{
+contract CTTToken is StandardToken {
     string public name = "CTTToken";
+
     string public symbol = "CTT";
+
     uint public decimals = 18;
+
     uint public INITIAL_SUPPLY = 10000;
+
     uint public EMISSION_RATE = 1000;
+
     address owner;
 
     event Emission(uint value);
 
-    function SKLToken(){
+    function CTTToken(address initialAccount){
         totalSupply = INITIAL_SUPPLY;
         owner = msg.sender;
         balances[msg.sender] = INITIAL_SUPPLY;
@@ -36,13 +42,25 @@ contract CTTToken is StandardToken{
     }
 
     function emission() returns (bool success){
-        if(msg.sender != owner){
+        if (msg.sender != owner) {
             return false;
         }
-
         totalSupply = safeAdd(totalSupply, EMISSION_RATE);
         balances[owner] = safeAdd(balances[owner], EMISSION_RATE);
 
         Emission(EMISSION_RATE);
     }
+
+    function getOwner() returns (address){
+        return owner;
+    }
+
+    function getTotalSupply() returns (uint){
+        return totalSupply;
+    }
+
+    function getFreeToken() returns (uint){
+        return balances[owner];
+    }
+
 }
