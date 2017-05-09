@@ -25,19 +25,27 @@ contract CTTToken is StandardToken {
         balances[msg.sender] = INITIAL_SUPPLY;
     }
 
-    function buyToken(address _to, uint _value) returns (bool success){
-        var _allowence = allowed[owner][msg.sender];
+    function createWallet(address _client) returns (bool success){
+        if (balances[_client] == 0) {
+            balances[_client] = 0;
+        }
+    }
+
+    function buyCoin(address _to, uint _value) returns (bool success){
+//        createWallet(_to);
+//        var _allowence = allowed[owner][msg.sender];
         balances[owner] = safeSub(balances[owner], _value);
-        balances[_to] = safeAdd(balances[_to], _value);
-        allowed[owner][msg.sender] = safeSub(_allowence, _value);
+        balances[_to] += _value;
+//        allowed[owner][msg.sender] = safeSub(_allowence, _value);
         Transfer(owner, _to, _value);
     }
 
-    function sellToken(address _from, uint _value) returns (bool success){
-        var _allowence = allowed[_from][msg.sender];
+    function sellCoin(address _from, uint _value) returns (bool success){
+//        createWallet(_from);
+//        var _allowence = allowed[_from][msg.sender];
         balances[owner] = safeAdd(balances[owner], _value);
-        balances[_from] = safeSub(balances[_from], _value);
-        allowed[_from][msg.sender] = safeSub(_allowence, _value);
+        balances[_from] -= _value;
+//        allowed[_from][msg.sender] = safeSub(_allowence, _value);
         Transfer(_from, owner, _value);
     }
 

@@ -184,21 +184,80 @@ window.App = {
         var token;
         CTTToken.deployed().then(function (instance) {
             token = instance;
-            return token.buyToken(Daccount1, 100, {from: Daccount1, gasPrice:gasPrice, gas:gasAmount})
+            return token.buyCoin(Daccount1, 100, {from: Daccount1, gasPrice: gasPrice, gas: gasAmount})
         })
             .then(function () {
                 self.refreshCTT();
+                self.loadFirstBalance();
             })
             .catch(function (e) {
                 console.log(e);
-                self.setStatus('Error during buying; see log;')
+                self.setStatus('Error during buying; see log;');
                 self.refreshCTT();
+                self.loadFirstBalance();
             })
 
     },
 
     firstSell: function () {
+        var self = this;
+        var token;
+        CTTToken.deployed().then(function (instance) {
+            token = instance;
+            return token.sellCoin(Daccount1, 100, {from: Daccount1, gasPrice: gasPrice, gas: gasAmount})
+        })
+            .then(function () {
+                self.refreshCTT();
+                self.loadFirstBalance();
+            })
+            .catch(function (e) {
+                console.log(e);
+                self.setStatus('Error during buying; see log;');
+                self.refreshCTT();
+                self.loadFirstBalance();
+            })
+    },
 
+    secondTransfer: function () {
+        var self = this;
+        var token;
+        CTTToken.deployed().then(function (instance) {
+            token = instance;
+            return token.transfer(Daccount1, 1000, {from: Daccount2, gasPrice: gasPrice, gas: gasAmount})
+        })
+            .then(function () {
+                self.refreshCTT();
+                self.loadFirstBalance();
+                self.loadSecondBalance();
+            })
+            .catch(function (e) {
+                console.log(e);
+                self.setStatus('Error during buying; see log;');
+                self.refreshCTT();
+                self.loadFirstBalance();
+                self.loadSecondBalance();
+            })
+    },
+
+    firstTransfer: function () {
+        var self = this;
+        var token;
+        CTTToken.deployed().then(function (instance) {
+            token = instance;
+            return token.transfer(Daccount2, 1000, {from: Daccount1, gasPrice: gasPrice, gas: gasAmount})
+        })
+            .then(function () {
+                self.refreshCTT();
+                self.loadFirstBalance();
+                self.loadSecondBalance();
+            })
+            .catch(function (e) {
+                console.log(e);
+                self.setStatus('Error during buying; see log;');
+                self.refreshCTT();
+                self.loadFirstBalance();
+                self.loadSecondBalance();
+            })
     },
 
     loadFirstBalance: function () {
@@ -209,17 +268,69 @@ window.App = {
             return token.balanceOf.call(Daccount1, {from: account})
         })
             .then(function (balance) {
+                console.log(balance.valueOf());
                 let el = document.getElementById('first-balance');
                 el.innerHTML = balance.valueOf();
             })
     },
 
     secondBuy: function () {
-
+        var self = this;
+        var token;
+        CTTToken.deployed().then(function (instance) {
+            token = instance;
+            return token.buyCoin(Daccount2, 1000, {from: Daccount1, gasPrice: gasPrice, gas: gasAmount})
+        })
+            .then(function () {
+                self.refreshCTT();
+                self.loadSecondBalance();
+            })
+            .catch(function (e) {
+                console.log(e);
+                self.setStatus('Error during buying; see log;');
+                self.refreshCTT();
+                self.loadSecondBalance();
+            })
     },
 
     secondSell: function () {
+        var self = this;
+        var token;
+        CTTToken.deployed().then(function (instance) {
+            token = instance;
+            return token.sellCoin(Daccount2, 1000, {from: Daccount1, gasPrice: gasPrice, gas: gasAmount})
+        })
+            .then(function () {
+                self.refreshCTT();
+                self.loadSecondBalance();
+            })
+            .catch(function (e) {
+                console.log(e);
+                self.setStatus('Error during buying; see log;');
+                self.refreshCTT();
+                self.loadSecondBalance();
+            })
+    },
 
+    secondTransfer: function () {
+        var self = this;
+        var token;
+        CTTToken.deployed().then(function (instance) {
+            token = instance;
+            return token.transfer(Daccount1, 1000, {from: Daccount2, gasPrice: gasPrice, gas: gasAmount})
+        })
+            .then(function () {
+                self.refreshCTT();
+                self.loadFirstBalance();
+                self.loadSecondBalance();
+            })
+            .catch(function (e) {
+                console.log(e);
+                self.setStatus('Error during buying; see log;');
+                self.refreshCTT();
+                self.loadFirstBalance();
+                self.loadSecondBalance();
+            })
     },
 
     loadSecondBalance: function () {

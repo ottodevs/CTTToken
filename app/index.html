@@ -10,21 +10,23 @@
   <h2>Example Truffle Dapp</h2>
   <h3>All amount of CTT: <span id="allAmount"></span></h3><button onclick="App.emission()">Emission</button>
   <h3>Free CTT: <span id="freeAmount"></span></h3>
-  <h3>You have <span class="black"><span id="balance"></span> META</span></h3>
+  <!--<h3>You have <span class="black"><span id="balance"></span> CTT</span></h3>-->
 
 
   <hr>
   <h1>First client</h1>
   <h2>Balance: <span id="first-balance"></span></h2>
   <br><button id="first-buy" onclick="App.firstBuy()">Buy 100 CTT</button>
-  <br><button id="first-sell" onclick="App.firstSell()">Sell 100 CTT</button>
+  <button id="first-sell" onclick="App.firstSell()">Sell 100 CTT</button>
+  <br><button id="first-transfer" onclick="App.firstTransfer()">Transfer 1000 CTT to second</button>
 
   <hr>
 
   <h1>Second client</h1>
   <h2>Balance: <span id="second-balance"></span></h2>
-  <br><button id="second-buy" onclick="App.firstBuy()">Buy 1000 CTT</button>
-  <br><button id="second-sell" onclick="App.firstSell()">Sell 1000 CTT</button>
+  <br><button id="second-buy" onclick="App.secondBuy()">Buy 1000 CTT</button>
+  <button id="second-sell" onclick="App.secondSell()">Sell 1000 CTT</button>
+  <br><button id="second-transfer" onclick="App.secondTransfer()">Transfer 1000 CTT to first</button>
 
   <!--<br>-->
   <!--<h1>Send MetaCoin</h1>-->
