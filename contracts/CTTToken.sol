@@ -22,7 +22,7 @@ contract CTTToken is StandardToken {
 
     event ChangingRate(uint rate);
 
-    uint public exchangeRate;
+    uint exchangeRate;
 
     function CTTToken(address initialAccount){
         totalSupply = INITIAL_SUPPLY;
@@ -30,7 +30,6 @@ contract CTTToken is StandardToken {
         balances[msg.sender] = INITIAL_SUPPLY;
         exchangeRate = INITIAL_EXCHANGE_RATE;
     }
-
 
     function changeExchangeRate(uint _rate) returns (bool success){
         if (msg.sender != owner) throw;
@@ -48,7 +47,6 @@ contract CTTToken is StandardToken {
     function buyToken(address _to) public payable returns (bool success){
         if (msg.value == 0) return false;
         uint _coinCount = msg.value * exchangeRate;
-//        if (balances[owner] < _coinCount) return false;
         if (balances[owner] < _coinCount) {
             totalSupply = safeAdd(totalSupply, _coinCount);
             balances[owner] = safeAdd(balances[owner], _coinCount);

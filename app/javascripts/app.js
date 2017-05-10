@@ -72,6 +72,7 @@ window.App = {
             return token.changeExchangeRate.call(newRate, {from: account})
         })
             .then(function () {
+                console.log('success changing rate');
                 self.refreshExchangeRate();
             })
             .catch(function (e) {
