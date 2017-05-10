@@ -57,16 +57,7 @@ window.App = {
     },
 
     setStatus: function (message) {
-        var status = document.getElementById("status");
-        status.innerHTML = message;
-    },
-
-    buyToken: function (buyer) {
-
-    },
-
-    sellToken: function (seller) {
-
+        $("#status").html(message);
     },
 
     refreshBalance: function () {
@@ -86,7 +77,6 @@ window.App = {
     },
 
     refreshCTT: function () {
-        this.loadCTTOwner();
         this.refreshCTTFree();
         this.refreshCTTSupply();
     },
@@ -99,8 +89,7 @@ window.App = {
             return token.getTotalSupply.call({from: account})
         })
             .then(function (value) {
-                var all_element = document.getElementById("allAmount");
-                all_element.innerHTML = value.valueOf();
+                $("#allAmount").html(value.valueOf());
             })
             .catch(function (e) {
                 console.log(e);
@@ -117,24 +106,11 @@ window.App = {
         })
             .then(function (value) {
                 console.log(value.valueOf());
-                let el = document.getElementById('freeAmount');
-                el.innerHTML = value.valueOf();
+                $('#freeAmount').html(value.valueOf());
             })
             .catch(function (e) {
                 console.log(e);
                 self.setStatus("Error getting CTTFree; see log;")
-            })
-    },
-
-    loadCTTOwner: function () {
-        var self = this;
-        var token;
-        CTTToken.deployed().then(function (instance) {
-            token = instance;
-            return token.getOwner.call({from: account})
-        })
-            .then(function (owner) {
-
             })
     },
 
@@ -269,8 +245,7 @@ window.App = {
         })
             .then(function (balance) {
                 console.log(balance.valueOf());
-                let el = document.getElementById('first-balance');
-                el.innerHTML = balance.valueOf();
+                $('#first-balance').html(balance.valueOf());
             })
     },
 
@@ -341,8 +316,7 @@ window.App = {
             return token.balanceOf.call(Daccount2, {from: account})
         })
             .then(function (balance) {
-                let el = document.getElementById('second-balance');
-                el.innerHTML = balance.valueOf();
+                $('#second-balance').html(balance.valueOf());
             })
     },
 };
