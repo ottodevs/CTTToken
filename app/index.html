@@ -7,16 +7,20 @@
   <script src="./app.js"></script>
 </head>
 <body>
-  <h1>CTTTOken</h1>
+  <h1>CTTToken</h1>
   <h2>Example Truffle Dapp</h2>
   <h3>All amount of CTT: <span id="allAmount"></span></h3><button onclick="App.emission()">Emission</button>
   <h3>Free CTT: <span id="freeAmount"></span></h3>
+  <h3>Exchange rate: <span id="exchangeRate"></span>CTT=1 ETH</h3>
+  <h3>Set rate: <input id="newRate" type="number" value="100"><button onclick="App.changeExchangeRate()">Set</button></h3>
+  <h3>ETH in: <span id="eth"></span></h3>
   <!--<h3>You have <span class="black"><span id="balance"></span> CTT</span></h3>-->
 
 
   <hr>
   <h1>First client</h1>
   <h2>Balance: <span id="first-balance"></span></h2>
+  <br><button id="first-buy-token" onclick="App.firstBuyToken()">Buy CTT</button>
   <br><button id="first-buy" onclick="App.firstBuy()">Buy 100 CTT</button>
   <button id="first-sell" onclick="App.firstSell()">Sell 100 CTT</button>
   <br><button id="first-transfer" onclick="App.firstTransfer()">Transfer 1000 CTT to second</button>

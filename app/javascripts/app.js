@@ -53,11 +53,31 @@ window.App = {
             self.refreshCTT();
             self.loadFirstBalance();
             self.loadSecondBalance();
+            self.refreshExchangeRate();
+            self.refreshETH();
         });
     },
 
     setStatus: function (message) {
         $("#status").html(message);
+    },
+
+    changeExchangeRate: function () {
+        var self = this;
+        var token;
+        CTTToken.deployed().then(function (instance) {
+            token = instance;
+            var newRate = $('#newRate').val();
+            console.log(newRate);
+            return token.changeExchangeRate.call(newRate, {from: account})
+        })
+            .then(function () {
+                self.refreshExchangeRate();
+            })
+            .catch(function (e) {
+                self.setStatus('Error during change rate; see log;');
+                console.log(e);
+            })
     },
 
     refreshBalance: function () {
@@ -111,6 +131,40 @@ window.App = {
             .catch(function (e) {
                 console.log(e);
                 self.setStatus("Error getting CTTFree; see log;")
+            })
+    },
+
+    refreshExchangeRate: function () {
+        var self = this;
+        var token;
+        CTTToken.deployed().then(function (instance) {
+            token = instance;
+            return token.getExchangeRate.call({from: account})
+        })
+            .then(function (value) {
+                console.log(value.valueOf());
+                $('#exchangeRate').html(value.valueOf());
+            })
+            .catch(function (e) {
+                console.log(e);
+                self.setStatus("Error getting exchange rate; see log;")
+            })
+    },
+
+    refreshETH: function () {
+        var self = this;
+        var token;
+        CTTToken.deployed().then(function (instance) {
+            token = instance;
+            return token.getBalance.call({from: account})
+        })
+            .then(function (value) {
+                console.log(value.valueOf());
+                $('#eth').html(value.valueOf());
+            })
+            .catch(function (e) {
+                console.log(e);
+                self.setStatus("Error getting ETH; see log;")
             })
     },
 
@@ -194,24 +248,24 @@ window.App = {
             })
     },
 
-    secondTransfer: function () {
+    firstBuyToken: function () {
         var self = this;
         var token;
         CTTToken.deployed().then(function (instance) {
             token = instance;
-            return token.transfer(Daccount1, 1000, {from: Daccount2, gasPrice: gasPrice, gas: gasAmount})
+            return token.buyToken(Daccount1, {value: 1, from: Daccount1, gasPrice: gasPrice, gas: gasAmount})
         })
             .then(function () {
                 self.refreshCTT();
                 self.loadFirstBalance();
-                self.loadSecondBalance();
+                self.refreshETH();
             })
             .catch(function (e) {
                 console.log(e);
                 self.setStatus('Error during buying; see log;');
                 self.refreshCTT();
                 self.loadFirstBalance();
-                self.loadSecondBalance();
+                self.refreshETH();
             })
     },
 
@@ -250,6 +304,25 @@ window.App = {
     },
 
     secondBuy: function () {
+        var self = this;
+        var token;
+        CTTToken.deployed().then(function (instance) {
+            token = instance;
+            return token.buyCoin(Daccount2, 1000, {from: Daccount1, gasPrice: gasPrice, gas: gasAmount})
+        })
+            .then(function () {
+                self.refreshCTT();
+                self.loadSecondBalance();
+            })
+            .catch(function (e) {
+                console.log(e);
+                self.setStatus('Error during buying; see log;');
+                self.refreshCTT();
+                self.loadSecondBalance();
+            })
+    },
+
+    secondBuyToken: function () {
         var self = this;
         var token;
         CTTToken.deployed().then(function (instance) {
